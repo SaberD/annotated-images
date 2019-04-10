@@ -43,12 +43,12 @@ def split(input_dir, output_dir="output", seed=1337, ratio=(.8, .1, .1)):
         ratio (list): ratios to split into train/test/val. has to sum up to 1.0
 
     Returns:
-        None
+        dict with the count of the number of images in each folder
     """
     assert sum(ratio) == 1
     assert len(ratio) in (2, 3)
 
-    split_ratio(input_dir, output_dir, ratio, seed)
+    return  split_ratio(input_dir, output_dir, ratio, seed)
 
 def setup_files(input_dir, seed):
     """Returns shuffled files
@@ -71,7 +71,7 @@ def split_ratio(input_dir, output_dir, ratio, seed):
     split_test = split_train + int(ratio[1] * len(files))
 
     li = split_files(files, split_train, split_test, len(ratio) == 3)
-    copy_files(li, output_dir)
+    return copy_files(li, output_dir)
 
 
 def split_files(files, split_train, split_test, use_val):
@@ -108,4 +108,5 @@ def copy_files(files_type, output):
                 shutil.copy2(i, full_path)
         out[folder_type] = counter
         total += counter
-    out[total]=total
+    out["total"]=total
+    return out
