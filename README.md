@@ -1,8 +1,9 @@
 # Split Folders
 
-Split folders with files (e.g. images) into train, validation and test folders.
+Split folders with files (e.g. images) into train, validation and test folders. 
 
-The input folder should have the following format:
+Keeps the annotation data (if there are any) together with their images.  
+Given the input folder in the following format:
 
 ```
 input/
@@ -18,7 +19,7 @@ input/
     ...
 ```
 
-In order to give you this:
+Gives you this:
 
 ```
 output/
@@ -44,22 +45,34 @@ output/
 -   Works on any file types.
 -   A [seed](https://docs.python.org/3/library/random.html#random.seed) lets you reproduce the splits.
 
+## Counting occurrences of tags
+This package includes functions to count the occurrences of a tag in JSON and XML files.  
+They can go through all files in a folder and count the occurrence of each tag on every (annotated) image.
+
 ## Install
 
 ```bash
-pip install split-data
+pip install annotated-images
 ```
 
 ### Module
 
 ```python
-import split-annotated-images
+import annotated_images
 
-# Split with a ratio.
 # To only split into training and validation set, set a tuple to `ratio`, i.e, `(.8, .2)`.
-split-annotated-images.ratio('input_folder', output="output", seed=1337, ratio=(.8, .1, .1)) # default values
-
-# Split val/test with a fixed number of items e.g. 100 for each set.
-# To only split into training and validation set, use a single number to `fixed`, i.e., `10`.
-split-annotated-images.fixed('input_folder', output="output", seed=1337, fixed=(100, 100), oversample=False) # default values
+annotated-images.split('input_folder', output="output", seed=1337, ratio=(.8, .1, .1))
 ```
+
+```python
+import annotated_images
+
+# Returns total count of 'tag' found in all json files in 'path'
+annotated-images.findTagsJson('path', 'tag')
+
+# Returns total count of 'tag' found in all xml files in 'path'
+annotated-images.findTagsXml('path', 'tag')
+```
+
+### Ref
+this package is forked from https://github.com/jfilter/split-folders
