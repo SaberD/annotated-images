@@ -26,7 +26,7 @@ def list_files(directory):
     if len(files) == 0:
         files = glob.glob
     if len(files) == 0:
-        print("no annotations found")
+        files = glob.glob(directory + "*.*")
     return files
 
 
@@ -76,6 +76,7 @@ def split_ratio(input_dir, output_dir, ratio, seed):
 
 def split_files(files, split_train, split_test, use_val):
     """Splits the files along the provided indices
+    Returns a dict with the number of images in each folder
     """
     files_train = files[:split_train]
     files_test = files[split_train:split_test] if use_val else files[split_train:]
@@ -93,6 +94,7 @@ def copy_files(files_type, output):
     """Copies the files from the input folder to the output folder
     """
     total = 0
+    out = dict()
     for (files, folder_type) in files_type:
         counter = 0
         full_path = path.join(output, folder_type)
@@ -104,6 +106,6 @@ def copy_files(files_type, output):
             counter += 1
             for i in glob.glob(name+".*"):
                 shutil.copy2(i, full_path)
-        print(folder_type + ": " + str(counter) + " images")
+        out[folder_type] = counter
         total += counter
-    print("Total: " + " " + str(total))
+    out[total]=total
