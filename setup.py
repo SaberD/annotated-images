@@ -10,14 +10,14 @@ classifiers = [
     'License :: OSI Approved :: MIT License',
     'Topic :: Utilities']
 
-setup(name='annotated-images',
+setup(name='annotated_images',
       version='0.1.0',
       description='Split training data images into training, validation and test (dataset) folders.',
       long_description=long_description,
       long_description_content_type="text/markdown",
-      url='https://github.com/saberd/split-folders',
+      url='https://github.com/saberd/annotated-images',
       author='saberd',
       author_email='mail@saberd.com',
       license='MIT',
-      packages=['annotated-images'],
+      packages=['annotated_images'],
       classifiers=classifiers)

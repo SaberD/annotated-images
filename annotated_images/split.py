@@ -31,6 +31,20 @@ def list_files(directory):
 
 
 def split(input_dir, output_dir="output", seed=1337, ratio=(.8, .1, .1)):
+    """Copies files from input dir to folders in output dir
+
+    Keeps the annotation data together with the images while splitting. 
+    To only split into train and test folder, only input ratio of len 2 (i.e. ratio=(0.8, 0.2)).
+
+    Args:
+        input_dir (str): path to images and annotation data.
+        output_dir (str): path to setup train/test/val folders
+        seed (int): enables reproducible splits results
+        ratio (list): ratios to split into train/test/val. has to sum up to 1.0
+
+    Returns:
+        None
+    """
     assert sum(ratio) == 1
     assert len(ratio) in (2, 3)
 
