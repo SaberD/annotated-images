@@ -1,4 +1,4 @@
-# Split Folders
+# Annotated images
 
 Split folders with files (e.g. images) into train, validation and test folders. 
 
