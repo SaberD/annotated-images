@@ -1,0 +1,95 @@
+"""Splits data into training testing and (validation)
+"""
+
+import pathlib
+import random
+import shutil
+import glob
+import json
+import xml.etree.cElementTree as et
+from os import path, listdir
+
+
+def list_dirs(directory):
+    """Returns all directories in a given directory
+    """
+    return [f for f in pathlib.Path(directory).iterdir() if f.is_dir()]
+
+
+def list_files(directory):
+    """Returns files in a given directory
+    Default only splits annotated images, if no annotations are found then all images are split.
+    """
+    files = glob.glob(directory + "*.json")
+    if len(files) == 0:
+        files = glob.glob(directory + "*.xml")
+    if len(files) == 0:
+        files = glob.glob
+    if len(files) == 0:
+        print("no annotations found")
+    return files
+
+
+def split(input_dir, output_dir="output", seed=1337, ratio=(.8, .1, .1)):
+    assert sum(ratio) == 1
+    assert len(ratio) in (2, 3)
+
+    split_ratio(input_dir, output_dir, ratio, seed)
+
+def setup_files(input_dir, seed):
+    """Returns shuffled files
+    """
+    # make sure its reproducible
+    random.seed(seed)
+
+    files = list_files(input_dir)
+
+    files.sort()
+    random.shuffle(files)
+    return files
+
+def split_ratio(input_dir, output_dir, ratio, seed):
+    """Splits one very class folder
+    """
+    files = setup_files(input_dir, seed)
+
+    split_train = int(ratio[0] * len(files))
+    split_test = split_train + int(ratio[1] * len(files))
+
+    li = split_files(files, split_train, split_test, len(ratio) == 3)
+    copy_files(li, output_dir)
+
+
+def split_files(files, split_train, split_test, use_val):
+    """Splits the files along the provided indices
+    """
+    files_train = files[:split_train]
+    files_test = files[split_train:split_test] if use_val else files[split_train:]
+
+    li = [(files_train, 'train'), (files_test, 'test')]
+
+    # optional validation folder
+    if use_val:
+        files_val = files[split_test:]
+        li.append((files_val, 'val'))
+    return li
+
+
+def copy_files(files_type, output):
+    """Copies the files from the input folder to the output folder
+    """
+    total = 0
+    for (files, folder_type) in files_type:
+        counter = 0
+        full_path = path.join(output, folder_type)
+
+        pathlib.Path(full_path).mkdir(
+            parents=True, exist_ok=True)
+        for f in files:
+            name = path.splitext(f)[0]
+            counter += 1
+            for i in glob.glob(name+".*"):
+                shutil.copy2(i, full_path)
+        print(folder_type + ": " + str(counter) + " images")
+        total += counter
+    print("Total: " + " " + str(total))
