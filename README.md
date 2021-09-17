@@ -52,7 +52,7 @@ They can go through all files in a folder and count the occurrence of each tag o
 ## Install
 
 ```bash
-pip install annotated-images
+pip install annotated_images
 ```
 
 ### Module
@@ -61,18 +61,19 @@ pip install annotated-images
 import annotated_images
 
 # To only split into training and validation set, set a tuple to `ratio`, i.e, `(.8, .2)`.
-annotated-images.split('input_folder', output="output", seed=1337, ratio=(.8, .1, .1))
+annotated_images.split('input_folder', output_dir="output", seed=1337, ratio=(.8, .1, .1))
 ```
 
 ```python
 import annotated_images
 
 # Returns total count of 'tag' found in all json files in 'path'
-annotated-images.findTagsJson('path', 'tag')
+annotated_images.findTagsJson('path', 'tag')
 
 # Returns total count of 'tag' found in all xml files in 'path'
-annotated-images.findTagsXml('path', 'tag')
+annotated_images.findTagsXml('path', 'tag')
 ```
 
 ### Ref
-this package is forked from https://github.com/jfilter/split-folders
+this package was forked from https://github.com/jfilter/split-folders
+and added the support for annotation files
