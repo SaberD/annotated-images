@@ -61,7 +61,7 @@ pip install annotated_images
 import annotated_images
 
 # To only split into training and validation set, set a tuple to `ratio`, i.e, `(.8, .2)`.
-annotated_images.split('input_folder', output_dir="output", seed=1337, ratio=(.8, .1, .1))
+annotated_images.split('input_folder', output_dir='output', seed=1337, ratio=(.8, .1, .1))
 ```
 
 ```python
