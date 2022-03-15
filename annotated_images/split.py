@@ -18,13 +18,11 @@ def list_files(directory):
     """Returns files in a given directory
     Default only splits annotated images, if no annotations are found then all images are split.
     """
-    files = glob.glob(directory + '*.json')
+    files = glob.glob(os.path.join(directory, '*.json'))
     if len(files) == 0:
-        files = glob.glob(directory + '*.xml')
+        files = glob.glob(os.path.join(directory, '*.xml'))
     if len(files) == 0:
-        files = glob.glob
-    if len(files) == 0:
-        files = glob.glob(directory + '*.*')
+        files = glob.glob(os.path.join(directory, '*.*'))
     return files
 
 
