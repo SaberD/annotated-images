@@ -11,7 +11,7 @@ classifiers = [
     'Topic :: Utilities']
 
 setup(name='annotated_images',
-      version='0.1.4',
+      version='0.1.5',
       description='Split training data images into training, validation and test (dataset) folders.',
       long_description=long_description,
       long_description_content_type="text/markdown",
